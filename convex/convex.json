@@ -1,0 +1,5 @@
+{
+  "functions": "./",
+  "schema": "./schema.ts",
+  "deployment": "https://hallowed-guanaco-877.convex.cloud"
+}
