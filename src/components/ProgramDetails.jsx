@@ -27,7 +27,9 @@ export function ProgramDetails() {
       <Card className="p-8 bg-white shadow-2xl rounded-3xl">
         <div className="flex items-center gap-2 mb-4">
           <GraduationCap size={32} className="text-bow-indigo" />
-          <h2 className="text-2xl font-bold text-bow-indigo">{program.name} <span className="text-base font-normal text-gray-600">({program.type})</span></h2>
+          <h2 className="text-2xl font-bold text-bow-indigo">
+            {program.name} <span className="text-base font-normal text-gray-600">({program.type})</span>
+          </h2>
         </div>
         <p className="text-gray-700 mb-3">{program.description}</p>
         <div className="grid grid-cols-2 gap-4 mb-4 text-sm">

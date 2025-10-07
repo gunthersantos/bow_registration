@@ -5,17 +5,14 @@ import { Input } from './ui/Input'
 import { Select } from './ui/Select'
 import { Button } from './ui/Button'
 import { Loader2, Sparkles, UserPlus } from 'lucide-react'
+import { useAuth } from '../context/AuthContext'
 import { programData } from '../data/demo'
-import { Program } from '../data/types'
-
-interface SignupProps {
-  onSignup: (userInfo: any) => void;
-}
 
 const defaultDepartment = "SD";
 
-export function Signup({ onSignup }: SignupProps) {
+export function Signup() {
   const navigate = useNavigate();
+  const { signup } = useAuth();
   const [form, setForm] = useState({
     firstName: "",
     lastName: "",
@@ -29,40 +26,25 @@ export function Signup({ onSignup }: SignupProps) {
   });
 
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState(null);
 
-  // Generate a random Student ID
-  function generateStudentId(): string {
-    return "SD" + Math.floor(100000 + Math.random() * 900000).toString();
-  }
-
-  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
+  function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e) {
     e.preventDefault();
     setLoading(true);
     setError(null);
 
-    // Simple validation
-    if (!form.firstName || !form.lastName || !form.email || !form.programCode || !form.username || !form.password) {
-      setError("Please fill all required fields.");
-      setLoading(false);
-      return;
+    const result = signup(form);
+    
+    if (result.success) {
+      navigate('/student-dashboard');
+    } else {
+      setError(result.error);
     }
-
-    // Simulate server-side signup (replace with real mutation if available)
-    setTimeout(() => {
-      const userInfo = {
-        ...form,
-        studentId: generateStudentId(),
-        program: programData.find(p => p.code === form.programCode)
-      };
-      setLoading(false);
-      onSignup(userInfo);
-      navigate("/student-dashboard");
-    }, 1200);
+    setLoading(false);
   }
 
   return (
@@ -72,7 +54,7 @@ export function Signup({ onSignup }: SignupProps) {
           <UserPlus size={32} className="text-bow-indigo" />
           <h2 className="text-2xl font-bold text-bow-indigo">Student Signup</h2>
         </div>
-        <form className="space-y-6" onSubmit={handleSubmit} aria-labelledby="signup-header">
+        <form className="space-y-6" onSubmit={handleSubmit}>
           <div className="grid grid-cols-2 gap-6">
             <Input
               label="First Name"
@@ -128,7 +110,7 @@ export function Signup({ onSignup }: SignupProps) {
             name="programCode"
             value={form.programCode}
             onChange={handleChange}
-            options={programData.map((p: Program) => ({
+            options={programData.map((p) => ({
               value: p.code,
               label: `${p.name} (${p.type})`
             }))}

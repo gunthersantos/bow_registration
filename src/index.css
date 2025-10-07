@@ -5,3 +5,30 @@
 body {
   font-family: 'Inter', Arial, sans-serif;
 }
+
+/* Custom mobile improvements */
+@layer components {
+  .btn-mobile {
+    @apply min-h-[44px] min-w-[44px]; /* Better touch targets */
+  }
+  
+  .text-mobile-lg {
+    @apply text-lg leading-tight;
+  }
+  
+  .text-mobile-xl {
+    @apply text-xl leading-tight;
+  }
+}
+
+/* Improve scroll on mobile */
+html {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Better focus for accessibility */
+button:focus-visible, 
+input:focus-visible, 
+select:focus-visible {
+  @apply outline-2 outline-offset-2 outline-bow-indigo;
+}

@@ -1,11 +1,6 @@
-import { InputHTMLAttributes } from 'react'
-import clsx from 'clsx'
+import clsx from 'clsx';
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  label: string;
-}
-
-export const Input = ({ label, className, ...props }: InputProps) => (
+export const Input = ({ label, className, ...props }) => (
   <div className="flex flex-col gap-1">
     <label htmlFor={props.name} className="text-sm font-semibold text-gray-700">{label}</label>
     <input

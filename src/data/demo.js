@@ -1,6 +1,4 @@
-import { Program, Course } from "./types";
-
-export const programData: Program[] = [
+export const programData = [
   {
     code: "SD-DIP",
     name: "Software Development - Diploma",
@@ -13,8 +11,7 @@ export const programData: Program[] = [
       domestic: "$9,254",
       international: "$27,735"
     },
-    description:
-      "A comprehensive two-year software development diploma program designed to equip students with practical and theoretical skills for modern software careers."
+    description: "A comprehensive two-year software development diploma program designed to equip students with practical and theoretical skills for modern software careers."
   },
   {
     code: "SD-PDIP",
@@ -28,8 +25,7 @@ export const programData: Program[] = [
       domestic: "$7,895",
       international: "$23,675"
     },
-    description:
-      "Jumpstart your tech career with our one-year post-diploma program in software development, focusing on advanced concepts and industry readiness."
+    description: "Jumpstart your tech career with our one-year post-diploma program in software development, focusing on advanced concepts and industry readiness."
   },
   {
     code: "SD-CERT",
@@ -43,12 +39,11 @@ export const programData: Program[] = [
       domestic: "$4,200",
       international: "$12,500"
     },
-    description:
-      "Gain the essential fundamentals of software development in just six months with our intensive certificate program."
+    description: "Gain the essential fundamentals of software development in just six months with our intensive certificate program."
   }
 ];
 
-export const courseData: Course[] = [
+export const courseData = [
   {
     code: "SD101",
     name: "Introduction to Programming",

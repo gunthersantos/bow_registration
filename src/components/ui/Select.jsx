@@ -1,22 +1,11 @@
-import { SelectHTMLAttributes } from 'react'
-import clsx from 'clsx'
-
-interface Option {
-  value: string;
-  label: string;
-}
-
-interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
-  label: string;
-  options: Option[];
-}
+import clsx from 'clsx';
 
 export const Select = ({
   label,
   options,
   className,
   ...props
-}: SelectProps) => (
+}) => (
   <div className="flex flex-col gap-1">
     <label htmlFor={props.name} className="text-sm font-semibold text-gray-700">{label}</label>
     <select

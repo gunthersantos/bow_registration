@@ -3,42 +3,37 @@ import { useNavigate } from 'react-router-dom'
 import { Card } from './ui/Card'
 import { Input } from './ui/Input'
 import { Button } from './ui/Button'
-import { Loader2, LogIn, Shield, User } from 'lucide-react'
+import { Loader2, LogIn, Shield } from 'lucide-react'
+import { useAuth } from '../context/AuthContext'
 
-interface LoginProps {
-  onLogin: (userType: "student" | "admin", userInfo: any) => void;
-}
-
-export function Login({ onLogin }: LoginProps) {
+export function Login() {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [form, setForm] = useState({ username: "", password: "" });
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState(null);
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+  function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e) {
     e.preventDefault();
     setLoading(true);
     setError(null);
 
-    // Demo: "admin"/"admin123" = admin, anything else = student
-    setTimeout(() => {
-      if (form.username === "admin" && form.password === "admin123") {
-        setLoading(false);
-        onLogin("admin", { username: "admin", firstName: "Admin", lastName: "User" });
-        navigate("/admin-dashboard");
-      } else if (form.username && form.password) {
-        setLoading(false);
-        onLogin("student", { username: form.username, firstName: "Student", lastName: "User", studentId: "SD123456" });
-        navigate("/student-dashboard");
+    const result = login(form.username, form.password);
+    
+    if (result.success) {
+      if (result.user.userType === 'admin') {
+        navigate('/admin-dashboard');
       } else {
-        setLoading(false);
-        setError("Invalid login. Please try again.");
+        navigate('/student-dashboard');
       }
-    }, 1000);
+    } else {
+      setError(result.error);
+    }
+    setLoading(false);
   }
 
   return (
@@ -48,7 +43,7 @@ export function Login({ onLogin }: LoginProps) {
           <LogIn size={32} className="text-bow-indigo" />
           <h2 className="text-2xl font-bold text-bow-indigo">Login</h2>
         </div>
-        <form className="space-y-6" onSubmit={handleSubmit} aria-labelledby="login-header">
+        <form className="space-y-6" onSubmit={handleSubmit}>
           <Input
             label="Username"
             name="username"
